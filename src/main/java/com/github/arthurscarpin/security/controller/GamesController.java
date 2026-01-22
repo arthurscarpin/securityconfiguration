@@ -1,6 +1,7 @@
 package com.github.arthurscarpin.security.controller;
 
-import com.github.arthurscarpin.security.model.Games;
+import com.github.arthurscarpin.security.controller.request.GamesRequest;
+import com.github.arthurscarpin.security.controller.response.GamesResponse;
 import com.github.arthurscarpin.security.service.GamesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,28 +19,28 @@ public class GamesController {
     private final GamesService service;
 
     @PostMapping
-    public ResponseEntity<Games> save(@Valid @RequestBody Games games) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(games));
+    public ResponseEntity<GamesResponse> save(@Valid @RequestBody GamesRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(request));
     }
 
     @GetMapping
-    public ResponseEntity<List<Games>> findAll() {
+    public ResponseEntity<List<GamesResponse>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Games> findById(@PathVariable Long id) {
+    public ResponseEntity<GamesResponse> findById(@PathVariable Long id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Games> updateById(@PathVariable Long id, @Valid @RequestBody Games games) {
+    public ResponseEntity<GamesResponse> updateById(@PathVariable Long id, @Valid @RequestBody GamesRequest request) {
         if (service.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(service.updateById(id, games));
+        return ResponseEntity.ok(service.updateById(id, request));
     }
 
     @DeleteMapping("/{id}")

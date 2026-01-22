@@ -1,6 +1,6 @@
 package com.github.arthurscarpin.security.repository;
 
-import com.github.arthurscarpin.security.model.Games;
+import com.github.arthurscarpin.security.entity.Games;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

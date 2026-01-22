@@ -1,6 +1,9 @@
 package com.github.arthurscarpin.security.service;
 
-import com.github.arthurscarpin.security.model.Games;
+import com.github.arthurscarpin.security.controller.request.GamesRequest;
+import com.github.arthurscarpin.security.controller.response.GamesResponse;
+import com.github.arthurscarpin.security.entity.Games;
+import com.github.arthurscarpin.security.mapper.GamesMapper;
 import com.github.arthurscarpin.security.repository.GamesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,21 +17,26 @@ public class GamesService {
 
     private final GamesRepository repository;
 
-    public Games save(Games games) {
-        return repository.save(games);
+    public GamesResponse save(GamesRequest request) {
+        return GamesMapper.toGamesResponse(repository.save(GamesMapper.toGames(request)));
     }
 
-    public List<Games> findAll() {
-        return repository.findAll();
+    public List<GamesResponse> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(GamesMapper::toGamesResponse)
+                .toList();
     }
 
-    public Optional<Games> findById(Long id) {
-        return repository.findById(id);
+    public Optional<GamesResponse> findById(Long id) {
+        return repository.findById(id)
+                .map(GamesMapper::toGamesResponse);
     }
 
-    public Games updateById(Long id, Games games) {
-        games.setId(id);
-        return repository.save(games);
+    public GamesResponse updateById(Long id, GamesRequest request) {
+        Games updatedGames = GamesMapper.toGames(request);
+        updatedGames.setId(id);
+        return GamesMapper.toGamesResponse(repository.save(updatedGames));
     }
 
     public void deleteById(Long id) {
