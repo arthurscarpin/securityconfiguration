@@ -11,3 +11,6 @@ spring:
     show-sql: true
   flyway:
     enabled: true
+security:
+  jwt:
+    secret: ${JWT_SECRET}

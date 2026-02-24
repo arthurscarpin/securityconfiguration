@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.util.Optional;
 
 @Component
-public class TokenConfig {
+public class TokenService {
 
     @Value("${security.jwt.secret}")
     private String secret;
@@ -41,7 +41,6 @@ public class TokenConfig {
                     .name(jwt.getClaim("name").asString())
                     .email(jwt.getSubject())
                     .build());
-
         } catch (JWTVerificationException e) {
             return Optional.empty();
         }

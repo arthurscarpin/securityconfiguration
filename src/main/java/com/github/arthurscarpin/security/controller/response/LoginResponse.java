@@ -1,4 +1,6 @@
 package com.github.arthurscarpin.security.controller.response;
 
-public record LoginResponse() {
+public record LoginResponse(
+        String token
+) {
 }

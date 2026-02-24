@@ -1,4 +1,14 @@
 package com.github.arthurscarpin.security.repository;
 
-public interface UserRepository {
+import com.github.arthurscarpin.security.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<UserDetails> findUserByEmail(String email);
 }
